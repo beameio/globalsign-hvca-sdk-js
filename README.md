@@ -35,5 +35,38 @@ unless you are sure about what you are doing.*
 	
 ### Assert domain validation claim
 
-	await gsClient.assertDomainValidationClaim(newClaimId);
+	await gsClient.assertDomainValidationClaim(claimId);
 	
+### Reassert domain validation claim
+
+	await gsClient.reassertDomainValidationClaim(claimId);
+
+### Delete all unverified domain validation claims
+
+	await gsClient.deleteUnverifiedDomainValidationClaims(domain);
+
+## Certificates
+
+### Create and fetch certificate
+
+Modified code from tests follows. The code was not tested after modifications for the readme.
+
+	gsClient = new gs_client.GlobalSignHVCAClient(mtlsCreds, accountCreds);
+
+	const NodeRSA = require("node-rsa");
+    const key = new NodeRSA();
+    key.setOptions({signingScheme: "pkcs1-sha256"});
+    key.generateKeyPair();
+    let publicKeyPem = key.exportKey("pkcs8-public-pem");
+    let publicKeyDer = key.exportKey('pkcs8-public-der');
+    let signature;
+
+    validationPolicy = await gsClient.getValidationPolicy();
+
+    if (validationPolicy.public_key_signature !== 'FORBIDDEN') {
+        signature = key.sign(publicKeyDer).toString("base64");
+    } else {
+        signature = null;
+    }
+
+    await gsClient.createAndRetrieveCertificate(publicKeyPem, signature, account.subject_dn, 3600, (account.dns_names || null))
