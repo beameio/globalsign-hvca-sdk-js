@@ -4,6 +4,7 @@ This readme is WIP.
 
 ## Create API client
 
+	const gs_client = require("globalsign-hvca-sdk-js");
 	gsClient = new gs_client.GlobalSignHVCAClient(mtlsCreds, accountCreds);
 
 ## Domain validation
