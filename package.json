@@ -1,0 +1,37 @@
+{
+  "name": "globalsign-hvca-sdk-js",
+  "version": "0.0.1",
+  "description": "GlobalSign HVCA client",
+  "main": "src/gs-client.js",
+  "dependencies": {
+    "aws-sdk": "latest",
+    "debug": "^4.1.0",
+    "node-rsa": "^1.0.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "mocha": "^5.2.0",
+    "mocha-steps": "^1.1.0",
+    "pem": "^1.13.2"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --delay --slow 5000 --require mocha-steps test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beameio/globalsign-hvca-sdk-js.git"
+  },
+  "keywords": [
+    "GlobalSign",
+    "x509",
+    "certificate"
+  ],
+  "author": "Beame.io LTD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beameio/globalsign-hvca-sdk-js/issues"
+  },
+  "homepage": "https://github.com/beameio/globalsign-hvca-sdk-js#readme"
+}
