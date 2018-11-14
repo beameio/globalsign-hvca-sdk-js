@@ -49,7 +49,8 @@ unless you are sure about what you are doing.*
 
 ### Create and fetch certificate
 
-Modified code from tests follows. The code was not tested after modifications for the readme.
+The following code is extracted from tests and should work with minor modifications
+such as substituting variables in order to pass the correct data into the function calls.
 
 	gsClient = new gs_client.GlobalSignHVCAClient(mtlsCreds, accountCreds);
 
@@ -69,4 +70,10 @@ Modified code from tests follows. The code was not tested after modifications fo
         signature = null;
     }
 
-    await gsClient.createAndRetrieveCertificate(publicKeyPem, signature, account.subject_dn, 3600, (account.dns_names || null))
+    await gsClient.createAndRetrieveCertificate(publicKeyPem, signature, subject_dn, 3600, dns_names || null)
+
+    // Same as: await createCertificate() and then retrieveCertificate()
+
+### Get trust chain
+
+	trustChain = await gsClient.getTrustChain();
