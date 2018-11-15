@@ -264,7 +264,6 @@ class GlobalSignHVCAClient {
         return this._makeAuthorizedRequest({
             method: 'GET',
             uri: apiEndpoint + "/v2/validationpolicy",
-            resolveWithFullResponse: true,
             json: true
         }).then(x => x.body);
     }
@@ -273,7 +272,6 @@ class GlobalSignHVCAClient {
         return this._makeAuthorizedRequest({
             method: 'GET',
             uri: apiEndpoint + "/v2/trustchain",
-            resolveWithFullResponse: true,
             json: true
         }).then(x => x.body);
     }
@@ -314,7 +312,6 @@ class GlobalSignHVCAClient {
         let options = {
             method: 'POST',
             uri: apiEndpoint + "/v2/certificates",
-            resolveWithFullResponse: true,
             // TODO: json: true
             body: JSON.stringify(requestBody),
             json: false, // Automatically stringifies the body to JSON
