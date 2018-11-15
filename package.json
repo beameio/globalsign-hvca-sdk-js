@@ -14,7 +14,8 @@
     "eslint": "^5.8.0",
     "mocha": "^5.2.0",
     "mocha-steps": "^1.1.0",
-    "pem": "^1.13.2"
+    "pem": "^1.13.2",
+    "x509": "^0.3.3"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --delay --slow 5000 --require mocha-steps test/test.js"

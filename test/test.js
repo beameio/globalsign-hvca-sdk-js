@@ -1,8 +1,11 @@
 const assert = require('assert');
 const util = require('util');
-const gs_client = require("../src/gs-client");
+
 const NodeRSA = require("node-rsa");
 const pem = require("pem");
+const x509 = require("x509");
+
+const gs_client = require("../src/gs-client");
 
 if(!process.env.TEST_PLAN_FACTORY) {
     console.error("Environment variable TEST_PLAN_FACTORY must be set");
@@ -23,6 +26,20 @@ const testPlanFactory = require(process.env.TEST_PLAN_FACTORY);
 if(!process.env.GS_ACCESS_TOKEN_TTL) {
     // Make sure the token expires during the tests
     process.env.GS_ACCESS_TOKEN_TTL = '20';
+}
+
+/**
+ * @param {String} cert
+ * @param {String[]} chain
+ * @throws Error
+ */
+function checkChain(cert, chain) {
+    assert.ok(chain && chain.length >= 1, "Trust chain must be present");
+    prev = cert;
+    for(c of chain) {
+        assert.deepEqual(x509.getIssuer(prev), x509.getSubject(c));
+        prev = c;
+    }
 }
 
 testPlanFactory.getTestPlan().then(testPlan => {
@@ -184,28 +201,16 @@ testPlanFactory.getTestPlan().then(testPlan => {
 
                 step('Get validation policy', async function () {
                     validationPolicy = await gsClient.getValidationPolicy();
-                    console.log(account.name, validationPolicy);
+                    // console.log(account.name, validationPolicy);
                 });
 
                 step('Get trust chain', async function() {
                     trustChain = await gsClient.getTrustChain();
+                    assert.ok(trustChain.length > 0, "Trust chain length must be greater than zero");
                     // console.log(trustChain);
                 });
 
                 step('Request certificate', async function () {
-
-                    const key = new NodeRSA();
-                    key.setOptions({signingScheme: "pkcs1-sha256"});
-                    key.generateKeyPair();
-                    let publicKeyPem = key.exportKey("pkcs8-public-pem");
-                    let publicKeyDer = key.exportKey('pkcs8-public-der');
-                    let signature;
-
-                    if (validationPolicy.public_key_signature !== 'FORBIDDEN') {
-                        signature = key.sign(publicKeyDer).toString("base64");
-                    } else {
-                        signature = null;
-                    }
 
                     try {
                         certificateUrl = await gsClient.createCertificate(...makeCreateCertificateArguments());
@@ -225,7 +230,9 @@ testPlanFactory.getTestPlan().then(testPlan => {
                 });
 
                 step('Check received certificate - result of createCertificate() and retrieveCertificate()', async function () {
-                    await checkCertificate(certificates[0] + trustChain);
+                    assert.ok(certificates && certificates.length >= 1, "There must be certificates to checkCertificate()");
+                    await checkCertificate(certificates[0]);
+                    checkChain(certificates[0], trustChain);
                 });
 
                 step('Create and fetch certificate in one go', async function () {
@@ -233,7 +240,9 @@ testPlanFactory.getTestPlan().then(testPlan => {
                 });
 
                 step('Check received certificate - result of createAndRetrieveCertificate()', async function () {
+                    assert.ok(certificates.length >= 2, "There must be certificates to checkCertificate()");
                     await checkCertificate(certificates[1]);
+                    checkChain(certificates[1], trustChain);
                 });
 
                 step('Check certificates are different', function () {
