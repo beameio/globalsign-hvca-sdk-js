@@ -252,7 +252,9 @@ class GlobalSignHVCAClient {
     };
 
     initWithEncryptedCredentials(decryptionPrivateKey, encryptedCredentials) {
-        throw new Error("initWithEncryptedCredentials() is not implemented yet");
+        // throw new Error("initWithEncryptedCredentials() is not implemented yet");
+        const decrypted = this.decryptPayload(encryptedCredentials, decryptionPrivateKey);
+        this.initWithKeyAndSecret(decrypted.key, decrypted.secret);
     }
 
     initWithKeyAndSecret(key, secret) {
