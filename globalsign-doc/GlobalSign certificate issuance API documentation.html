@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html><head><title>GlobalSign certificate issuance API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="generator" content="https://github.com/raml2html/raml2html 6.3.0"><link rel="stylesheet" href="GlobalSign%20certificate%20issuance%20API%20documentation_files/bootstrap.css"><link rel="stylesheet" href="GlobalSign%20certificate%20issuance%20API%20documentation_files/default.css"><script type="text/javascript" src="GlobalSign%20certificate%20issuance%20API%20documentation_files/jquery-1.js"></script><script type="text/javascript" src="GlobalSign%20certificate%20issuance%20API%20documentation_files/bootstrap.js"></script><script type="text/javascript" src="GlobalSign%20certificate%20issuance%20API%20documentation_files/highlight.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+      .items {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+      }
+      .examples {
+        margin-left: 0.5em;
+      }
+      .resource-modal li > ul {
+        margin-bottom: 1em;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar" class=""><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>GlobalSign certificate issuance API documentation <small>version v2.1</small></h1><p>https://emea.api.hvca.globalsign.com:8443/{version}</p><ul><li><strong>version</strong>: <em>required (v2.1)</em></li></ul></div><div class="panel panel-default"><div class="panel-heading"><h3 id="login" class="panel-title">/login</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_login"><span class="parent"></span>/login</a> <span class="methods"><a href="#login_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_login" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#login_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Returned when the request does not have a Content-Length</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="login_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/login</h4></div><div class="modal-body"><div class="alert alert-info"><p>Returned when the request does not have a Content-Length</p></div><ul class="nav nav-tabs"><li class="active"><a href="#login_post_request" data-toggle="tab">Request</a></li><li><a href="#login_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="login_post_request"><h3>Headers</h3><ul><li><strong>Content-Type</strong>: <em>required (string - pattern: ^application/json;charset=utf-8$)</em><p>Request Content-Type</p></li><li><strong>Content-Length</strong>: <em>required (integer - minimum: 1)</em><p>Length of the request in bytes</p></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>api_key</strong>: <em>required (string)</em></li><li><strong>api_secret</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"api_key"</span>: <span class="hljs-string">"e510e289e6cd8947"</span>,
+  <span class="hljs-attr">"api_secret"</span>: <span class="hljs-string">"a477a8393d17a55ecb2ba6a61f58feb84770b621"</span>
+}</code></pre></div></div><div class="tab-pane" id="login_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returned on successful authentication</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>access_token</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"access_token"</span>: <span class="hljs-string">"eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJ1c2VyX2lkIjogMX0.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Bad Request"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><p>Returned on unsuccessful authentication</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/411" target="_blank">411</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Content-Length required"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/415" target="_blank">415</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Bad Content-Type"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><p>Returned in response to malformed authentication requests</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Invalid login request"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="certificates" class="panel-title">/certificates</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_certificates"><span class="parent"></span>/certificates</a> <span class="methods"><a href="#certificates_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_certificates" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#certificates_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Submit a request for issuing a new certificate</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="certificates_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/certificates</h4></div><div class="modal-body"><div class="alert alert-info"><p>Submit a request for issuing a new certificate</p></div><ul class="nav nav-tabs"><li class="active"><a href="#certificates_post_request" data-toggle="tab">Request</a></li><li><a href="#certificates_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="certificates_post_request"><h3>Headers</h3><ul><li><strong>Content-Type</strong>: <em>required (string - pattern: ^application/json;charset=utf-8$)</em><p>Request Content-Type</p></li><li><strong>Content-Length</strong>: <em>required (integer - minimum: 1)</em><p>Length of the request in bytes</p></li><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>validity</strong>: <em>required (object)</em><ul><li><strong>not_before</strong>: <em>required (integer)</em><p>UTC UNIX timestamp</p></li><li><strong>not_after</strong>: <em>(integer)</em><p>UTC
+ UNIX timestamp If not specified, or specified to 0, then the not_after 
+value is automatically set to the maximum value allowed by the 
+validation policy</p></li></ul></li><li><strong>subject_dn</strong>: <em>required (object)</em><p>List of Distinguished Name attributes to include in the certificate. See RFC 5280#4.1.2.6</p><ul><li><strong>country</strong>: <em>(string - minLength: 2 - maxLength: 2 - pattern: ^[A-Z]{2}$)</em><p>ISO 3166-1 alpha-2 two-letter country code</p></li><li><strong>state</strong>: <em>(string)</em></li><li><strong>locality</strong>: <em>(string)</em></li><li><strong>street_address</strong>: <em>(string)</em></li><li><strong>organization</strong>: <em>(string)</em></li><li><strong>organizational_unit</strong>: <em>(array of string)</em></li><li><strong>common_name</strong>: <em>(string)</em></li><li><strong>email</strong>: <em>(string)</em></li><li><strong>jurisdiction_of_incorporation_locality_name</strong>: <em>(string)</em></li><li><strong>jurisdiction_of_incorporation_state_or_province_name</strong>: <em>(string)</em></li><li><strong>jurisdiction_of_incorporation_country_name</strong>: <em>(string)</em></li><li><strong>business_category</strong>: <em>(string)</em></li><li><strong>extra_attributes</strong>: <em>(array of type_and_value)</em><p>Extra subject distinguished name attributes to include by OID and value</p><p><strong>Items</strong>: type_and_value</p><div class="items"><ul><li><strong>type</strong>: <em>required (string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>Object Identifier such as 1.3.6.1.4.1.311.20.2</p></li><li><strong>value</strong>: <em>(string)</em></li></ul></div></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"common_name"</span>: <span class="hljs-string">"John Doe"</span>,
+  <span class="hljs-attr">"country"</span>: <span class="hljs-string">"GB"</span>,
+  <span class="hljs-attr">"state"</span>: <span class="hljs-string">"London"</span>,
+  <span class="hljs-attr">"locality"</span>: <span class="hljs-string">"London"</span>,
+  <span class="hljs-attr">"street_address"</span>: <span class="hljs-string">"1 GlobalSign Road"</span>,
+  <span class="hljs-attr">"organization"</span>: <span class="hljs-string">"GMO GlobalSign"</span>,
+  <span class="hljs-attr">"organizational_unit"</span>: [
+    <span class="hljs-string">"Operations"</span>,
+    <span class="hljs-string">"Development"</span>
+  ],
+  <span class="hljs-attr">"email"</span>: <span class="hljs-string">"john.doe@demo.hvca.globalsign.com"</span>,
+  <span class="hljs-attr">"jurisdiction_of_incorporation_locality_name"</span>: <span class="hljs-string">"London"</span>,
+  <span class="hljs-attr">"jurisdiction_of_incorporation_state_or_province_name"</span>: <span class="hljs-string">"London"</span>,
+  <span class="hljs-attr">"jurisdiction_of_incorporation_country_name"</span>: <span class="hljs-string">"United Kingdom"</span>,
+  <span class="hljs-attr">"business_category"</span>: <span class="hljs-string">"Internet security"</span>,
+  <span class="hljs-attr">"extra_attributes"</span>: [
+    {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.4.4"</span>,
+      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"Surname"</span>
+    }
+  ]
+}</code></pre></div></li><li><strong>san</strong>: <em>(object)</em><p>List of Subject Alternative Name attributes to include in the certificate. See RFC 5280#4.2.1.6</p><ul><li><strong>dns_names</strong>: <em>(array of string)</em></li><li><strong>emails</strong>: <em>(array of string)</em></li><li><strong>ip_addresses</strong>: <em>(array of string)</em></li><li><strong>uris</strong>: <em>(array of string)</em></li><li><strong>other_names</strong>: <em>(array of type_and_value)</em><p><strong>Items</strong>: type_and_value</p><div class="items"><ul><li><strong>type</strong>: <em>required (string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>Object Identifier such as 1.3.6.1.4.1.311.20.2</p></li><li><strong>value</strong>: <em>(string)</em></li></ul></div></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"dns_names"</span>: [
+    <span class="hljs-string">"test.demo.hvca.globalsign.com"</span>,
+    <span class="hljs-string">"test2.demo.hvca.globalsign.com"</span>
+  ],
+  <span class="hljs-attr">"ip_addresses"</span>: [
+    <span class="hljs-string">"198.41.214.154"</span>
+  ],
+  <span class="hljs-attr">"uris"</span>: [
+    <span class="hljs-string">"http://test.demo.hvca.globalsign.com/uri"</span>
+  ],
+  <span class="hljs-attr">"emails"</span>: [
+    <span class="hljs-string">"admin@demo.hvca.globalsign.com"</span>,
+    <span class="hljs-string">"contact@demo.hvca.globalsign.com"</span>
+  ],
+  <span class="hljs-attr">"other_names"</span>: [
+    {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"1.3.6.1.4.1.311.20.2.3"</span>,
+      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"upn@demo.hvca.globalsign.com"</span>
+    }
+  ]
+}</code></pre></div></li><li><strong>extended_key_usages</strong>: <em>(array of oid)</em><p>List of Extended Key Usages to include in the certificate. See RFC 5280#4.2.1.12</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">[
+  <span class="hljs-string">"1.3.6.1.5.5.7.3.1"</span>,
+  <span class="hljs-string">"1.3.6.1.5.5.7.3.2"</span>
+]</code></pre></div></li><li><strong>subject_da</strong>: <em>(object)</em><p>List of Subject Directory Attributes to include in the certificate. See RFC3739</p><ul><li><strong>gender</strong>: <em>(string)</em></li><li><strong>date_of_birth</strong>: <em>(date-only)</em><p>RFC3339 date. As per RFC3739, the resulting attribute will specify time as GMT 12.00.00 (noon)</p></li><li><strong>place_of_birth</strong>: <em>(string)</em></li><li><strong>country_of_citizenship</strong>: <em>(array of country_code)</em><p>List of ISO 3166-1 Alpha-2 country codes</p></li><li><strong>country_of_residence</strong>: <em>(array of country_code)</em><p>List of ISO 3166-1 Alpha-2 country codes</p></li><li><strong>extra_attributes</strong>: <em>(array of type_and_value)</em><p>Extra subject directory attributes to include by OID and value</p><p><strong>Items</strong>: type_and_value</p><div class="items"><ul><li><strong>type</strong>: <em>required (string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>Object Identifier such as 1.3.6.1.4.1.311.20.2</p></li><li><strong>value</strong>: <em>(string)</em></li></ul></div></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"gender"</span>: <span class="hljs-string">"m"</span>,
+  <span class="hljs-attr">"date_of_birth"</span>: <span class="hljs-string">"1979-01-31"</span>,
+  <span class="hljs-attr">"place_of_birth"</span>: <span class="hljs-string">"London"</span>,
+  <span class="hljs-attr">"country_of_citizenship"</span>: [
+    <span class="hljs-string">"GB"</span>,
+    <span class="hljs-string">"US"</span>
+  ],
+  <span class="hljs-attr">"country_of_residence"</span>: [
+    <span class="hljs-string">"US"</span>
+  ],
+  <span class="hljs-attr">"extra_attributes"</span>: [
+    {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.29.9.1.1.1"</span>
+    },
+    {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.29.9.1.1.2"</span>,
+      <span class="hljs-attr">"value"</span>: <span class="hljs-string">"custom subject da value"</span>
+    }
+  ]
+}</code></pre></div></li><li><strong>qualified_statements</strong>: <em>(object)</em><p>List of qualified statements to include in the certificate See RFC 3739#3.2.6</p><ul><li><strong>semantics</strong>: <em>(object)</em><p>If present QC-Statement identifier will be id-qcs-pkixQCSyntax-v2. See RFC 3739#3.2.6.1</p><ul><li><strong>identifier</strong>: <em>(string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>SemanticsIdentifier as per RFC 3739#3.2.6.1.</p></li><li><strong>name_authorities</strong>: <em>(array of )</em><p>NameRegistrationAuthorities
+ as per RFC 3739#3.2.6.1. QC-Statement identifier will be 
+id-qcs-pkixQCSyntax-v2 (1.3.6.1.5.5.7.11.2).</p></li></ul></li><li><strong>etsi_qc_compliance</strong>: <em>(boolean)</em><p>This
+ QCstatement claims that the certificate is an EU qualified certificate 
+that is issued according to Directive 1999/93/EC [i.3] or the Annex I, 
+III or IV of the Regulation (EU) No 910/2014 [i.8] whichever is in force
+ at the time of issuance. See ETSI EN 319 412-5 V2.1.1#4.2.1</p></li><li><strong>etsi_qc_sscd_compliance</strong>: <em>(boolean)</em><p>This
+ QCstatement declares that the private key related to the certified 
+public key resides in a Qualified Signature/Seal Creation Device (QSCD) 
+according to the Regulation (EU) No 910/2014 [i.8] or a secure signature
+ creation device as defined in the Directive 1999/93/EC [i.3]. See ETSI 
+EN 319 412-5 V2.1.1#4.2.2</p></li><li><strong>etsi_qc_type</strong>: <em>(string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>This
+ QCStatement declares that a EU qualified certificate is issued as one 
+or more specific types according to Annexes I, III or IV of the 
+Regulation (EU) No 910/2014 [i.8] when used in combination with the 
+qcStatement as defined in clause 4.2.1. When used on its own it 
+indicates that it is used for the purposes of electronic signatures, 
+seals or web sites for "non-qualified certificates" within the context 
+of Regulation (EU) No 910/2014 [i.8]. See ETSI EN 319 412-5 V2.1.1#4.2.3</p></li><li><strong>etsi_qc_retention_period</strong>: <em>(integer)</em><p>This
+ QCStatement declares a retention period for material information 
+relevant to the use of and reliance on a certificate, expressed as a 
+number of years after the expiry date of the certificate. See ETSI EN 
+319 412-5 V2.1.1#4.3.3</p></li><li><strong>etsi_qc_pds</strong>: <em>(object)</em><p>This
+ QCStatement holds URLs to PKI Disclosure Statements (PDS) in accordance
+ with Annex A of ETSI EN 319 411-1. See ETSI EN 319 412-5 V2.1.1#4.3.4.</p><ul><li><strong></strong>: <em>required (string)</em><p>The
+ key indicates the language of the PDS and shall be as defined in ISO 
+639-1. The value corresponds to the URL at which the PDS can be 
+accessed.</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"semantics"</span>: {
+    <span class="hljs-attr">"identifier"</span>: <span class="hljs-string">"1.1.1.1.1.1"</span>,
+    <span class="hljs-attr">"name_authorities"</span>: [
+      <span class="hljs-string">"contact@ra1.hvsign.globalsign.com"</span>
+    ]
+  },
+  <span class="hljs-attr">"etsi_qc_compliance"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"etsi_qc_type"</span>: <span class="hljs-string">"0.4.0.1862.1.6.1"</span>,
+  <span class="hljs-attr">"etsi_qc_sscd_compliance"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"etsi_qc_retention_period"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"etsi_qc_pds"</span>: {
+    <span class="hljs-attr">"EN"</span>: <span class="hljs-string">"https://demo.hvsign.globalsign.com/en/pds"</span>
+  }
+}</code></pre></div></li><li><strong>ms_extension_template</strong>: <em>(object)</em><p>Values to populate Microsoft template extension (91.3.6.1.4.1.311.21.7) with</p><ul><li><strong>id</strong>: <em>(string - pattern: ^([0-9]{1,9}\.){0,63}[0-9]+$)</em><p>Object Identifier such as 1.3.6.1.4.1.311.20.2</p></li><li><strong>major_version</strong>: <em>(integer)</em></li><li><strong>minor_version</strong>: <em>(integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"1.2.3.4.123.4.5.1"</span>,
+  <span class="hljs-attr">"major_version"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"minor_version"</span>: <span class="hljs-number">2</span>
+}</code></pre></div></li><li><strong>custom_extensions</strong>: <em>(object)</em><p>List of custom extensions to include in the certificate as X509v3 extensions. See RFC5280#4.2</p><ul><li><strong></strong>: <em>required (string)</em><p>The
+ key indicates the object identifier of the custom extension and the 
+value will be formatted as defined by the corresponding validation 
+policy.</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"2.5.29.99.1"</span>: <span class="hljs-string">"NIL"</span>,
+  <span class="hljs-attr">"2.5.29.99.2"</span>: <span class="hljs-string">"SOME TEXT"</span>
+}</code></pre></div></li><li><strong>public_key</strong>: <em>required (string - pattern: -{5}BEGIN PUBLIC KEY-{5}.+-{5}END PUBLIC KEY-{5})</em><p>PEM
+ encoded SubjectPublicKeyInfo ASN1 structure (defined in RFC 5280). RSA 
+public key: subjectPublicKey field is defined in RFC 3447. ECDSA public 
+key: subjectPublicKey field is defined in RFC 5480. Only SECP curves are
+ supported. The PEM encoding format (defined in RFC 1421) requires a 
+line length of 64 characters except for the last line which can be 
+shorter. In JSON newlines are delimited with ASCII newline symbol "\n". 
+Please see the example public_key field.</p></li><li><strong>public_key_signature</strong>: <em>(string)</em><p>Base64
+ encoded signature of the DER representation of the public key sent in 
+the public_key field. Only the SHA256 digest algorithm is supported. For
+ RSA signature use EMSA-PKCS1-v1_5 encoding (defined in RFC 3447). PSS 
+is not supported. For ECDSA signature use DER encoded ECDSA-Sig-Value 
+(defined in RFC 5480 or ANSI X9.62:2005)</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"validity"</span>: {
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1477958400</span>,
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1509494400</span>
+  },
+  <span class="hljs-attr">"subject_dn"</span>: {
+    <span class="hljs-attr">"common_name"</span>: <span class="hljs-string">"John Doe"</span>,
+    <span class="hljs-attr">"country"</span>: <span class="hljs-string">"GB"</span>,
+    <span class="hljs-attr">"state"</span>: <span class="hljs-string">"London"</span>,
+    <span class="hljs-attr">"locality"</span>: <span class="hljs-string">"London"</span>,
+    <span class="hljs-attr">"street_address"</span>: <span class="hljs-string">"1 GlobalSign Road"</span>,
+    <span class="hljs-attr">"organization"</span>: <span class="hljs-string">"GMO GlobalSign"</span>,
+    <span class="hljs-attr">"organizational_unit"</span>: [
+      <span class="hljs-string">"Operations"</span>,
+      <span class="hljs-string">"Development"</span>
+    ],
+    <span class="hljs-attr">"email"</span>: <span class="hljs-string">"john.doe@demo.hvca.globalsign.com"</span>,
+    <span class="hljs-attr">"jurisdiction_of_incorporation_locality_name"</span>: <span class="hljs-string">"London"</span>,
+    <span class="hljs-attr">"jurisdiction_of_incorporation_state_or_province_name"</span>: <span class="hljs-string">"London"</span>,
+    <span class="hljs-attr">"jurisdiction_of_incorporation_country_name"</span>: <span class="hljs-string">"United Kingdom"</span>,
+    <span class="hljs-attr">"business_category"</span>: <span class="hljs-string">"Internet security"</span>,
+    <span class="hljs-attr">"extra_attributes"</span>: [
+      {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.4.4"</span>,
+        <span class="hljs-attr">"value"</span>: <span class="hljs-string">"Surname"</span>
+      }
+    ]
+  },
+  <span class="hljs-attr">"san"</span>: {
+    <span class="hljs-attr">"dns_names"</span>: [
+      <span class="hljs-string">"test.demo.hvca.globalsign.com"</span>,
+      <span class="hljs-string">"test2.demo.hvca.globalsign.com"</span>
+    ],
+    <span class="hljs-attr">"ip_addresses"</span>: [
+      <span class="hljs-string">"198.41.214.154"</span>
+    ],
+    <span class="hljs-attr">"uris"</span>: [
+      <span class="hljs-string">"http://test.demo.hvca.globalsign.com/uri"</span>
+    ],
+    <span class="hljs-attr">"emails"</span>: [
+      <span class="hljs-string">"admin@demo.hvca.globalsign.com"</span>,
+      <span class="hljs-string">"contact@demo.hvca.globalsign.com"</span>
+    ],
+    <span class="hljs-attr">"other_names"</span>: [
+      {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"1.3.6.1.4.1.311.20.2.3"</span>,
+        <span class="hljs-attr">"value"</span>: <span class="hljs-string">"upn@demo.hvca.globalsign.com"</span>
+      }
+    ]
+  },
+  <span class="hljs-attr">"subject_da"</span>: {
+    <span class="hljs-attr">"gender"</span>: <span class="hljs-string">"m"</span>,
+    <span class="hljs-attr">"date_of_birth"</span>: <span class="hljs-string">"1979-01-31"</span>,
+    <span class="hljs-attr">"place_of_birth"</span>: <span class="hljs-string">"London"</span>,
+    <span class="hljs-attr">"country_of_citizenship"</span>: [
+      <span class="hljs-string">"GB"</span>,
+      <span class="hljs-string">"US"</span>
+    ],
+    <span class="hljs-attr">"country_of_residence"</span>: [
+      <span class="hljs-string">"US"</span>
+    ],
+    <span class="hljs-attr">"extra_attributes"</span>: [
+      {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.29.9.1.1.1"</span>
+      },
+      {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"2.5.29.9.1.1.2"</span>,
+        <span class="hljs-attr">"value"</span>: <span class="hljs-string">"custom subject da value"</span>
+      }
+    ]
+  },
+  <span class="hljs-attr">"extended_key_usages"</span>: [
+    <span class="hljs-string">"1.3.6.1.5.5.7.3.1"</span>,
+    <span class="hljs-string">"1.3.6.1.5.5.7.3.2"</span>
+  ],
+  <span class="hljs-attr">"qualified_statements"</span>: {
+    <span class="hljs-attr">"semantics"</span>: {
+      <span class="hljs-attr">"identifier"</span>: <span class="hljs-string">"1.1.1.1.1.1"</span>,
+      <span class="hljs-attr">"name_authorities"</span>: [
+        <span class="hljs-string">"contact@ra1.globalsign.com"</span>
+      ]
+    },
+    <span class="hljs-attr">"etsi_qc_compliance"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"etsi_qc_type"</span>: <span class="hljs-string">"0.4.0.1862.1.6.1"</span>,
+    <span class="hljs-attr">"etsi_qc_sscd_compliance"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"etsi_qc_retention_period"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"etsi_qc_pds"</span>: {
+      <span class="hljs-attr">"EN"</span>: <span class="hljs-string">"https://demo.globalsign.com/en/pds"</span>
+    }
+  },
+  <span class="hljs-attr">"ms_extension_template"</span>: {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"1.2.3.4.123.4.5.1"</span>,
+    <span class="hljs-attr">"major_version"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"minor_version"</span>: <span class="hljs-number">2</span>
+  },
+  <span class="hljs-attr">"custom_extensions"</span>: {
+    <span class="hljs-attr">"2.5.29.99.1"</span>: <span class="hljs-string">"NIL"</span>,
+    <span class="hljs-attr">"2.5.29.99.2"</span>: <span class="hljs-string">"SOME TEXT"</span>
+  },
+  <span class="hljs-attr">"public_key"</span>: <span class="hljs-string">"-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwU2imlDf02o8DPveLN73\nwbrQKScch9AnkMuQqBxxq5YBUAvPDXYeeA8tkgk+N2Q5FNL/BXI0m1QTlq8FbdAQ\nKkpi93vimsymHpkBFTxZSqMcI55vyLanjfMOnZ7Xbgq0hhub/K6FZpFCJ2oqoLwr\nY5hBYAGYQco5qw4nbR9Mpeu41QGQzrGjYIKNOVgXh/m41FOGDsQntecaLAluTg+E\n/Qmb8U7XZVBn3/DPyiXrfobuBlnmEbPjQ95LAvRLzcHzWY0YB1dfGzbcK1PaGRLE\nod2C1QCGK+YWzeUWEyHqgNEncQDMFYFKUd1IhR6OSmVB1ukXa0y8eZBVWsoxXr2X\nlQIDAQAB\n-----END PUBLIC KEY-----"</span>,
+  <span class="hljs-attr">"public_key_signature"</span>: <span class="hljs-string">"MIGIAkIA6CotF+LAs2MeymHWul2KuatxcqWDpvhgaEJCI+joyj7p9XEUyH5pBTJ2VqvO0hKYEm+dZl8KKD7ISHWz8Vfb9cECQgFwaB7u/5cw4kT5gv9BPTlxCSiZRlRPVbTbYWl/BeaWAwrt3oEqDuHXOwIQscj/887bBEN/SnYGpKkKe/qdKEd0gw=="</span>
+}</code></pre></div></div><div class="tab-pane" id="certificates_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Returned after accepting the certificate issuance request</p><h3>Headers</h3><ul><li><strong>Location</strong>: <em>required (string)</em><p>The URL of the newly created certificate</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript">{baseUri}<span class="hljs-regexp">/certificates/</span>{certificate}</code></pre></div></li><li><strong>Content-Length</strong>: <em>required (integer - default: 0)</em><p>This response does not contain a body</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Bad Request"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/402" target="_blank">402</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Quota Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/411" target="_blank">411</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Content-Length required"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/415" target="_blank">415</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Bad Content-Type"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><p>Returned when the issuance request is invalid</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Message describing the validation error"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_certificates__certificate_"><span class="parent">/certificates</span>/{certificate}</a> <span class="methods"><a href="#certificates__certificate__get"><span class="badge badge_get">get</span></a> <a href="#certificates__certificate__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_certificates__certificate_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#certificates__certificate__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retrieve a certificate</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#certificates__certificate__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Used to revoke a certificate</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="certificates__certificate__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/certificates</span>/{certificate}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retrieve a certificate</p></div><ul class="nav nav-tabs"><li class="active"><a href="#certificates__certificate__get_request" data-toggle="tab">Request</a></li><li><a href="#certificates__certificate__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="certificates__certificate__get_request"><h3>URI Parameters</h3><ul><li><strong>certificate</strong>: <em>required (string)</em><p>Certificate identifier</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="certificates__certificate__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returned when the certificate is available for retrieval</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>certificate</strong>: <em>required (string - pattern: -{5}BEGIN CERTIFICATE-{5}.+-{5}END CERTIFICATE-{5})</em><p>The
+ returned certificate is PEM encoded. The PEM encoding format (defined 
+in RFC 1421) requires a line length of 64 characters, except for the 
+last line which can be shorter. In JSON newlines are delimited with 
+ASCII newline symbol "\n".</p></li><li><strong>status</strong>: <em>required (one of ISSUED, REVOKED)</em></li><li><strong>updated_at</strong>: <em>required (integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"certificate"</span>: <span class="hljs-string">"-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----"</span>,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"ISSUED"</span>,
+  <span class="hljs-attr">"updated_at"</span>: <span class="hljs-number">1477958400</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/202" target="_blank">202</a></h2><p>Returned while the backend is busy issuing the certificate</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Operation in progress"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><p>Returned when the issuing backend could not validate the issuance request</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"CA validation error"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="certificates__certificate__delete" style="display: none;" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/certificates</span>/{certificate}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Used to revoke a certificate</p></div><ul class="nav nav-tabs"><li class="active"><a href="#certificates__certificate__delete_request" data-toggle="tab">Request</a></li><li><a href="#certificates__certificate__delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="certificates__certificate__delete_request"><h3>URI Parameters</h3><ul><li><strong>certificate</strong>: <em>required (string)</em><p>Certificate identifier</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="certificates__certificate__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><p>Returned when the certificate is confirmed as revoked</p><h3>Headers</h3><ul><li><strong>Content-Length</strong>: <em>required (integer - default: 0)</em><p>This response does not return a body</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Bad Request"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/409" target="_blank">409</a></h2><p>Returned when the certificate is already revoked or pending issuance</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Cannot revoke a REJECTED certificate"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="validationpolicy" class="panel-title">/validationpolicy</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_validationpolicy"><span class="parent"></span>/validationpolicy</a> <span class="methods"><a href="#validationpolicy_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_validationpolicy" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#validationpolicy_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Retrieve the validation policy associated with the current account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="validationpolicy_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/validationpolicy</h4></div><div class="modal-body"><div class="alert alert-info"><p>Retrieve the validation policy associated with the current account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#validationpolicy_get_request" data-toggle="tab">Request</a></li><li><a href="#validationpolicy_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="validationpolicy_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="validationpolicy_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returns the validation policy associated with the current account</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>validity</strong>: <em>required (object)</em><ul><li><strong>secondsmin</strong>: <em>required (integer)</em></li><li><strong>secondsmax</strong>: <em>required (integer)</em></li><li><strong>not_before_negative_skew</strong>: <em>required (integer)</em><p>Maximum deviation of the certificate request not_before field from the current server timestamp in the past</p></li><li><strong>not_before_positive_skew</strong>: <em>required (integer)</em><p>Maximum deviation of the certificate request not_before field from the current server timestamp in the future</p></li></ul></li><li><strong>subject_dn</strong>: <em>required (object)</em><p>Validation policy for subject_dn field.</p><ul><li><strong>locality</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>email</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>jurisdiction_of_incorporation_locality_name</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>jurisdiction_of_incorporation_country_name</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>state</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>organization</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>business_category</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>extra_attributes</strong>: <em>required (object)</em><ul><li><strong></strong>: <em>required (object)</em><p>Validation policy for type_and_value fields.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>value_type</strong>: <em>required (one of IA5STRING, PRINTABLESTRING, UTF8STRING, INTEGER, DER, NIL)</em><p>This
+ field describes what ASN.1 type the value in a type_and_value object 
+should be encoded as. IA5STRING: International ASCII characters 
+(International Alphabet 5). PRINTABLESTRING: a-z, A-Z, 0-9, ' () 
++,-.?:/= and SPACE. UTF8STRING: any character from a recognized alphabet
+ (including ASCII control characters). INTEGER: values can be positive, 
+negative, or zero, and can have any magnitude. DER: hex string of DER 
+encoded data which will be used as-is. Should include Tag Length and 
+Value. NIL: Indicates no value will be present.</p></li><li><strong>value_format</strong>: <em>(string)</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li></ul></li><li><strong>street_address</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>jurisdiction_of_incorporation_state_or_province_name</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>common_name</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>organizational_unit</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>country</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"common_name"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z -]+$"</span>
+  },
+  <span class="hljs-attr">"organization"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"GMO GlobalSign"</span>
+  },
+  <span class="hljs-attr">"organizational_unit"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+  },
+  <span class="hljs-attr">"country"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"GB"</span>
+  },
+  <span class="hljs-attr">"state"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+  },
+  <span class="hljs-attr">"locality"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+  },
+  <span class="hljs-attr">"street_address"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^\\w+$"</span>
+  },
+  <span class="hljs-attr">"email"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^\\w[-._\\w]*\\w@\\w[-._\\w]*\\w.\\w{2,3}"</span>
+  },
+  <span class="hljs-attr">"jurisdiction_of_incorporation_locality_name"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+  },
+  <span class="hljs-attr">"jurisdiction_of_incorporation_state_or_province_name"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+  },
+  <span class="hljs-attr">"jurisdiction_of_incorporation_country_name"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"FORBIDDEN"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+  },
+  <span class="hljs-attr">"business_category"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+  },
+  <span class="hljs-attr">"extra_attributes"</span>: {
+    <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"PRINTABLESTRING"</span>,
+      <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"static attribute"</span>,
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.6"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+      <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>,
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+    }
+  }
+}</code></pre></div></li><li><strong>san</strong>: <em>(object)</em><p>Validation policy for san field.</p><ul><li><strong>dns_names</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by suffix matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>emails</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by suffix matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>uris</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>ip_addresses</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>other_names</strong>: <em>required (object)</em><ul><li><strong></strong>: <em>required (object)</em><p>Validation policy for type_and_value fields.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>value_type</strong>: <em>required (one of IA5STRING, PRINTABLESTRING, UTF8STRING, INTEGER, DER, NIL)</em><p>This
+ field describes what ASN.1 type the value in a type_and_value object 
+should be encoded as. IA5STRING: International ASCII characters 
+(International Alphabet 5). PRINTABLESTRING: a-z, A-Z, 0-9, ' () 
++,-.?:/= and SPACE. UTF8STRING: any character from a recognized alphabet
+ (including ASCII control characters). INTEGER: values can be positive, 
+negative, or zero, and can have any magnitude. DER: hex string of DER 
+encoded data which will be used as-is. Should include Tag Length and 
+Value. NIL: Indicates no value will be present.</p></li><li><strong>value_format</strong>: <em>(string)</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"dns_names"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">".hvca.demo.globalsign.com"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+  },
+  <span class="hljs-attr">"emails"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">"@hvca.demo.globalsign.com"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+  },
+  <span class="hljs-attr">"ip_addresses"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">0</span>
+  },
+  <span class="hljs-attr">"uris"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">".*\\.hvca\\.demo\\.globalsign\\.com/[A-Za-z /.]*$"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+  },
+  <span class="hljs-attr">"other_names"</span>: {
+    <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+      <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z.-]@demo.hvsign.globalsign.com"</span>,
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+    }
+  }
+}</code></pre></div></li><li><strong>extended_key_usages</strong>: <em>(object)</em><p>Validation policy for extended_key_usages field.</p><ul><li><strong>ekus</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>critical</strong>: <em>required (boolean)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"ekus"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">"^1.3.6.1.5.5.7.3.[1-3]$"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+  },
+  <span class="hljs-attr">"critical"</span>: <span class="hljs-literal">true</span>
+}</code></pre></div></li><li><strong>subject_da</strong>: <em>(object)</em><p>Validation policy for subject_da field.</p><ul><li><strong>gender</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>date_of_birth</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>place_of_birth</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>country_of_citizenship</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>country_of_residence</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li><li><strong>extra_attributes</strong>: <em>required (object)</em><ul><li><strong></strong>: <em>required (object)</em><p>Validation policy for type_and_value fields.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>value_type</strong>: <em>required (one of IA5STRING, PRINTABLESTRING, UTF8STRING, INTEGER, DER, NIL)</em><p>This
+ field describes what ASN.1 type the value in a type_and_value object 
+should be encoded as. IA5STRING: International ASCII characters 
+(International Alphabet 5). PRINTABLESTRING: a-z, A-Z, 0-9, ' () 
++,-.?:/= and SPACE. UTF8STRING: any character from a recognized alphabet
+ (including ASCII control characters). INTEGER: values can be positive, 
+negative, or zero, and can have any magnitude. DER: hex string of DER 
+encoded data which will be used as-is. Should include Tag Length and 
+Value. NIL: Indicates no value will be present.</p></li><li><strong>value_format</strong>: <em>(string)</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"gender"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[MmFf]$"</span>
+  },
+  <span class="hljs-attr">"date_of_birth"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+  <span class="hljs-attr">"place_of_birth"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>
+  },
+  <span class="hljs-attr">"country_of_citizenship"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">"GB"</span>,
+      <span class="hljs-string">"US"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">2</span>
+  },
+  <span class="hljs-attr">"country_of_residence"</span>: {
+    <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"list"</span>: [
+      <span class="hljs-string">"GB"</span>,
+      <span class="hljs-string">"US"</span>
+    ],
+    <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+    <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">2</span>
+  },
+  <span class="hljs-attr">"extra_attributes"</span>: {
+    <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"PRINTABLESTRING"</span>,
+      <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"static attribute"</span>,
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.6"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+      <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>,
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+    }
+  }
+}</code></pre></div></li><li><strong>qualified_statements</strong>: <em>(object)</em><p>Validation policy for qualified_statements field.</p><ul><li><strong>semantics</strong>: <em>required (object)</em><ul><li><strong>identifier</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>name_authorities</strong>: <em>required (object)</em><p>Validation policy for list fields that are validated by regex matching.</p><ul><li><strong>static</strong>: <em>required (boolean)</em></li><li><strong>list</strong>: <em>required (array of )</em></li><li><strong>mincount</strong>: <em>required (integer)</em></li><li><strong>maxcount</strong>: <em>required (integer)</em></li></ul></li></ul></li><li><strong>etsi_qc_compliance</strong>: <em>required (one of OPTIONAL, STATIC_TRUE, STATIC_FALSE)</em><p>Determines if a boolean field is optional or statically set to true or false.</p></li><li><strong>etsi_qc_sscd_compliance</strong>: <em>required (one of OPTIONAL, STATIC_TRUE, STATIC_FALSE)</em><p>Determines if a boolean field is optional or statically set to true or false.</p></li><li><strong>etsi_qc_type</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>etsi_qc_retention_period</strong>: <em>required (object)</em><p>Validation policy for integer fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>min</strong>: <em>required (integer - minimum: 0)</em></li><li><strong>max</strong>: <em>required (integer - minimum: 0)</em></li></ul></li><li><strong>etsi_qc_pds</strong>: <em>required (object)</em><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>policies</strong>: <em>required (object)</em><ul><li><strong></strong>: <em>required (string)</em></li></ul></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"semantics"</span>: {
+    <span class="hljs-attr">"identifier"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"1.1.1.1.1.1"</span>
+    },
+    <span class="hljs-attr">"name_authorities"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"list"</span>: [
+        <span class="hljs-string">"contact@ra1.hvsign.globalsign.com"</span>
+      ],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+    }
+  },
+  <span class="hljs-attr">"etsi_qc_compliance"</span>: <span class="hljs-string">"STATIC_TRUE"</span>,
+  <span class="hljs-attr">"etsi_qc_sscd_compliance"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+  <span class="hljs-attr">"etsi_qc_type"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^0.4.0.1862.1.6.[1-3]$"</span>
+  },
+  <span class="hljs-attr">"etsi_qc_retention_period"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"min"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"max"</span>: <span class="hljs-number">3</span>
+  },
+  <span class="hljs-attr">"etsi_qc_pds"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+    <span class="hljs-attr">"policies"</span>: {
+      <span class="hljs-attr">"EN"</span>: <span class="hljs-string">"https://etsi.pds.demo.globalsign.com/en/pds"</span>
+    }
+  }
+}</code></pre></div></li><li><strong>ms_extension_template</strong>: <em>(object)</em><p>Validation policy for ms_extension_template field.</p><ul><li><strong>critical</strong>: <em>required (boolean)</em></li><li><strong>template_id</strong>: <em>required (object)</em><p>Validation policy for string fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>format</strong>: <em>required (string)</em></li></ul></li><li><strong>major_version</strong>: <em>required (object)</em><p>Validation policy for integer fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>min</strong>: <em>required (integer - minimum: 0)</em></li><li><strong>max</strong>: <em>required (integer - minimum: 0)</em></li></ul></li><li><strong>minor_version</strong>: <em>required (object)</em><p>Validation policy for integer fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>min</strong>: <em>required (integer - minimum: 0)</em></li><li><strong>max</strong>: <em>required (integer - minimum: 0)</em></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"critical"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"template_id"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+    <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^1.2.3.4.123.4.5.[1-3]$"</span>
+  },
+  <span class="hljs-attr">"major_version"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+    <span class="hljs-attr">"min"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"max"</span>: <span class="hljs-number">10</span>
+  },
+  <span class="hljs-attr">"minor_version"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"min"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"max"</span>: <span class="hljs-number">10</span>
+  }
+}</code></pre></div></li><li><strong>custom_extensions</strong>: <em>(object)</em><p>Validation policy for custom_extensions field.</p><ul><li><strong></strong>: <em>required (object)</em><p>Validation policy for extension fields.</p><ul><li><strong>presence</strong>: <em>required (one of OPTIONAL, REQUIRED, FORBIDDEN, STATIC)</em><p>Determines if a field is required, optional, forbidden or static.</p></li><li><strong>critical</strong>: <em>required (boolean)</em></li><li><strong>value_type</strong>: <em>required (one of IA5STRING, PRINTABLESTRING, UTF8STRING, INTEGER, DER, NIL)</em><p>This
+ field describes what ASN.1 type the value in a type_and_value object 
+should be encoded as. IA5STRING: International ASCII characters 
+(International Alphabet 5). PRINTABLESTRING: a-z, A-Z, 0-9, ' () 
++,-.?:/= and SPACE. UTF8STRING: any character from a recognized alphabet
+ (including ASCII control characters). INTEGER: values can be positive, 
+negative, or zero, and can have any magnitude. DER: hex string of DER 
+encoded data which will be used as-is. Should include Tag Length and 
+Value. NIL: Indicates no value will be present.</p></li><li><strong>value_format</strong>: <em>(string)</em></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+    <span class="hljs-attr">"critical"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"NIL"</span>
+  },
+  <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.6"</span>: {
+    <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+    <span class="hljs-attr">"critical"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"DER"</span>,
+    <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^([A-Fa-f0-9]{2})+$"</span>
+  }
+}</code></pre></div></li><li><strong>public_key</strong>: <em>required (object)</em><ul><li><strong>key_type</strong>: <em>required (one of RSA, ECDSA)</em></li><li><strong>allowed_lengths</strong>: <em>required (array of integer)</em></li></ul></li><li><strong>public_key_signature</strong>: <em>required (one of REQUIRED, FORBIDDEN)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"validity"</span>: {
+    <span class="hljs-attr">"secondsmin"</span>: <span class="hljs-number">3600</span>,
+    <span class="hljs-attr">"secondsmax"</span>: <span class="hljs-number">86400</span>,
+    <span class="hljs-attr">"not_before_negative_skew"</span>: <span class="hljs-number">120</span>,
+    <span class="hljs-attr">"not_before_positive_skew"</span>: <span class="hljs-number">3600</span>
+  },
+  <span class="hljs-attr">"subject_dn"</span>: {
+    <span class="hljs-attr">"common_name"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"REQUIRED"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z -]+$"</span>
+    },
+    <span class="hljs-attr">"organization"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"GMO GlobalSign"</span>
+    },
+    <span class="hljs-attr">"organizational_unit"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [
+        <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+      ],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+    },
+    <span class="hljs-attr">"country"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"STATIC"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"GB"</span>
+    },
+    <span class="hljs-attr">"state"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+    },
+    <span class="hljs-attr">"locality"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z][A-Za-z \\-]+$"</span>
+    },
+    <span class="hljs-attr">"street_address"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z0-9][A-Za-z0-9 \\-]+$"</span>
+    },
+    <span class="hljs-attr">"email"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"FORBIDDEN"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^\\w[-._\\w]*\\w@\\w[-._\\w]*\\w.\\w{2,3}"</span>
+    },
+    <span class="hljs-attr">"jurisdiction_of_incorporation_locality_name"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+    },
+    <span class="hljs-attr">"jurisdiction_of_incorporation_state_or_province_name"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+    },
+    <span class="hljs-attr">"jurisdiction_of_incorporation_country_name"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"FORBIDDEN"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+    },
+    <span class="hljs-attr">"business_category"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"FORBIDDEN"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\-]*$"</span>
+    },
+    <span class="hljs-attr">"extra_attributes"</span>: {
+      <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+        <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"PRINTABLESTRING"</span>,
+        <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"static attribute"</span>,
+        <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+      },
+      <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.6"</span>: {
+        <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+        <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>,
+        <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+      }
+    }
+  },
+  <span class="hljs-attr">"san"</span>: {
+    <span class="hljs-attr">"dns_names"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">0</span>
+    },
+    <span class="hljs-attr">"emails"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [
+        <span class="hljs-string">"^\\w[-._\\w]*\\w@\\w[-._\\w]*\\w.\\w{2,3}$"</span>
+      ],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+    },
+    <span class="hljs-attr">"ip_addresses"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">0</span>
+    },
+    <span class="hljs-attr">"uris"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">0</span>
+    },
+    <span class="hljs-attr">"other_names"</span>: {
+      <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+        <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+        <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z.-]@demo.globalsign.com"</span>,
+        <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+      }
+    }
+  },
+  <span class="hljs-attr">"subject_da"</span>: {
+    <span class="hljs-attr">"gender"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[MmFf]$"</span>
+    },
+    <span class="hljs-attr">"date_of_birth"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+    <span class="hljs-attr">"place_of_birth"</span>: {
+      <span class="hljs-attr">"presence"</span>: <span class="hljs-string">"OPTIONAL"</span>,
+      <span class="hljs-attr">"format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>
+    },
+    <span class="hljs-attr">"country_of_citizenship"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"list"</span>: [
+        <span class="hljs-string">"GB"</span>,
+        <span class="hljs-string">"US"</span>
+      ],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">2</span>
+    },
+    <span class="hljs-attr">"country_of_residence"</span>: {
+      <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"list"</span>: [
+        <span class="hljs-string">"GB"</span>,
+        <span class="hljs-string">"US"</span>
+      ],
+      <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">2</span>
+    },
+    <span class="hljs-attr">"extra_attributes"</span>: {
+      <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.5"</span>: {
+        <span class="hljs-attr">"static"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"PRINTABLESTRING"</span>,
+        <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"static attribute"</span>,
+        <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">1</span>
+      },
+      <span class="hljs-attr">"1.3.6.1.5.5.7.48.1.6"</span>: {
+        <span class="hljs-attr">"static"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"value_type"</span>: <span class="hljs-string">"UTF8STRING"</span>,
+        <span class="hljs-attr">"value_format"</span>: <span class="hljs-string">"^[A-Za-z \\\\-]*$"</span>,
+        <span class="hljs-attr">"mincount"</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-attr">"maxcount"</span>: <span class="hljs-number">3</span>
+      }
+    }
+  },
+  <span class="hljs-attr">"public_key"</span>: {
+    <span class="hljs-attr">"key_type"</span>: <span class="hljs-string">"RSA"</span>,
+    <span class="hljs-attr">"allowed_lengths"</span>: [
+      <span class="hljs-number">2048</span>,
+      <span class="hljs-number">4096</span>
+    ]
+  },
+  <span class="hljs-attr">"public_key_signature"</span>: <span class="hljs-string">"REQUIRED"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="counters_certificates" class="panel-title">/counters/certificates</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_counters_certificates_issued"><span class="parent">/counters/certificates</span>/issued</a> <span class="methods"><a href="#counters_certificates_issued_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_counters_certificates_issued" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#counters_certificates_issued_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Query the number of certificates issued by the calling account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="counters_certificates_issued_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/counters/certificates</span>/issued</h4></div><div class="modal-body"><div class="alert alert-info"><p>Query the number of certificates issued by the calling account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#counters_certificates_issued_get_request" data-toggle="tab">Request</a></li><li><a href="#counters_certificates_issued_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="counters_certificates_issued_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="counters_certificates_issued_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfuly return an integer</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>value</strong>: <em>required (integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"value"</span>: <span class="hljs-number">12</span>
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_counters_certificates_revoked"><span class="parent">/counters/certificates</span>/revoked</a> <span class="methods"><a href="#counters_certificates_revoked_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_counters_certificates_revoked" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#counters_certificates_revoked_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Query the number of certificates revoked by the calling account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="counters_certificates_revoked_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/counters/certificates</span>/revoked</h4></div><div class="modal-body"><div class="alert alert-info"><p>Query the number of certificates revoked by the calling account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#counters_certificates_revoked_get_request" data-toggle="tab">Request</a></li><li><a href="#counters_certificates_revoked_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="counters_certificates_revoked_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="counters_certificates_revoked_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfuly return an integer</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>value</strong>: <em>required (integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"value"</span>: <span class="hljs-number">12</span>
+}
+</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="stats" class="panel-title">/stats</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_stats_issued"><span class="parent">/stats</span>/issued</a> <span class="methods"><a href="#stats_issued_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_stats_issued" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#stats_issued_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Query metadata of certificates issued by the calling account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="stats_issued_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/stats</span>/issued</h4></div><div class="modal-body"><div class="alert alert-info"><p>Query metadata of certificates issued by the calling account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#stats_issued_get_request" data-toggle="tab">Request</a></li><li><a href="#stats_issued_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="stats_issued_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>Page number</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1</code></pre></div></li><li><strong>per_page</strong>: <em>(integer)</em><p>Number of elements displayed per page</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">10</code></pre></div></li><li><strong>from</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the beginning of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524570139</code></pre></div></li><li><strong>to</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the end of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524573739</code></pre></div></li></ul></div><div class="tab-pane" id="stats_issued_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returns the certificate metadata</p><h3>Headers</h3><ul><li><strong>Total-Count</strong>: <em>required (integer)</em><p>Total number of elements found</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">20</code></pre></div></li><li><strong>Links</strong>: <em>required (string)</em><p>Links to previous/next/last page if available</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript">&lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">2</span>&gt;; rel=<span class="hljs-string">"previous"</span>; &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">4</span>&gt;; rel=<span class="hljs-string">"next"</span>, &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">5</span>&gt;; rel=<span class="hljs-string">"last"</span></code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: array of certificateMetadata</p><p><strong>Items</strong>: certificateMetadata</p><div class="items"><ul><li><strong>serial_number</strong>: <em>required (string)</em></li><li><strong>not_before</strong>: <em>required (integer)</em></li><li><strong>not_after</strong>: <em>required (integer)</em></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">[
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"3436670571841985917699178058350683260"</span>
+  },
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"4452086980628212788705863397373867915"</span>
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_stats_revoked"><span class="parent">/stats</span>/revoked</a> <span class="methods"><a href="#stats_revoked_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_stats_revoked" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#stats_revoked_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Query metadata of certificates revoked by the calling account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="stats_revoked_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/stats</span>/revoked</h4></div><div class="modal-body"><div class="alert alert-info"><p>Query metadata of certificates revoked by the calling account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#stats_revoked_get_request" data-toggle="tab">Request</a></li><li><a href="#stats_revoked_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="stats_revoked_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>Page number</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1</code></pre></div></li><li><strong>per_page</strong>: <em>(integer)</em><p>Number of elements displayed per page</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">10</code></pre></div></li><li><strong>from</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the beginning of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524570139</code></pre></div></li><li><strong>to</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the end of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524573739</code></pre></div></li></ul></div><div class="tab-pane" id="stats_revoked_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returns the certificate metadata</p><h3>Headers</h3><ul><li><strong>Total-Count</strong>: <em>required (integer)</em><p>Total number of elements found</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">20</code></pre></div></li><li><strong>Links</strong>: <em>required (string)</em><p>Links to previous/next/last page if available</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript">&lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">2</span>&gt;; rel=<span class="hljs-string">"previous"</span>; &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">4</span>&gt;; rel=<span class="hljs-string">"next"</span>, &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">5</span>&gt;; rel=<span class="hljs-string">"last"</span></code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: array of certificateMetadata</p><p><strong>Items</strong>: certificateMetadata</p><div class="items"><ul><li><strong>serial_number</strong>: <em>required (string)</em></li><li><strong>not_before</strong>: <em>required (integer)</em></li><li><strong>not_after</strong>: <em>required (integer)</em></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">[
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"3436670571841985917699178058350683260"</span>
+  },
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"4452086980628212788705863397373867915"</span>
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_stats_expiring"><span class="parent">/stats</span>/expiring</a> <span class="methods"><a href="#stats_expiring_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_stats_expiring" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#stats_expiring_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Query expiry dates of certificates issued by the calling account</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="stats_expiring_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/stats</span>/expiring</h4></div><div class="modal-body"><div class="alert alert-info"><p>Query expiry dates of certificates issued by the calling account</p></div><ul class="nav nav-tabs"><li class="active"><a href="#stats_expiring_get_request" data-toggle="tab">Request</a></li><li><a href="#stats_expiring_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="stats_expiring_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>Page number</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1</code></pre></div></li><li><strong>per_page</strong>: <em>(integer)</em><p>Number of elements displayed per page</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">10</code></pre></div></li><li><strong>from</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the beginning of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524570139</code></pre></div></li><li><strong>to</strong>: <em>(integer)</em><p>UTC UNIX timestamp marking the end of the time window</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1524573739</code></pre></div></li></ul></div><div class="tab-pane" id="stats_expiring_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Returns the certificate metadata</p><h3>Headers</h3><ul><li><strong>Total-Count</strong>: <em>required (integer)</em><p>Total number of elements found</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">20</code></pre></div></li><li><strong>Links</strong>: <em>required (string)</em><p>Links to previous/next/last page if available</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript">&lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">2</span>&gt;; rel=<span class="hljs-string">"previous"</span>; &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">4</span>&gt;; rel=<span class="hljs-string">"next"</span>, &lt;<span class="hljs-regexp">/stats/</span>{status}?page=<span class="hljs-number">5</span>&gt;; rel=<span class="hljs-string">"last"</span></code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: array of certificateMetadata</p><p><strong>Items</strong>: certificateMetadata</p><div class="items"><ul><li><strong>serial_number</strong>: <em>required (string)</em></li><li><strong>not_before</strong>: <em>required (integer)</em></li><li><strong>not_after</strong>: <em>required (integer)</em></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">[
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"3436670571841985917699178058350683260"</span>
+  },
+  {
+    <span class="hljs-attr">"not_after"</span>: <span class="hljs-number">1507906704</span>,
+    <span class="hljs-attr">"not_before"</span>: <span class="hljs-number">1507820244</span>,
+    <span class="hljs-attr">"serial_number"</span>: <span class="hljs-string">"4452086980628212788705863397373867915"</span>
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="claims_domains" class="panel-title">/claims/domains</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_claims_domains"><span class="parent"></span>/claims/domains</a> <span class="methods"><a href="#claims_domains_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_claims_domains" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#claims_domains_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Request all domain claims</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent"></span>/claims/domains</h4></div><div class="modal-body"><div class="alert alert-info"><p>Request all domain claims</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains_get_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains_get_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul><h3>Query Parameters</h3><ul><li><strong>page</strong>: <em>(integer)</em><p>Page number</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">1</code></pre></div></li><li><strong>per_page</strong>: <em>(integer)</em><p>Number of claims returned per page</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">10</code></pre></div></li><li><strong>status</strong>: <em>(one of PENDING, VERIFIED)</em><p>Status of claims to retrieve</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">VERIFIED</code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Headers</h3><ul><li><strong>Total-Count</strong>: <em>required (integer)</em><p>Total number of elements found</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs">20</code></pre></div></li><li><strong>Links</strong>: <em>required (string)</em><p>Links to previous/next/last page if available</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs javascript">&lt;<span class="hljs-regexp">/claims/</span>domains?page=<span class="hljs-number">2</span>&gt;; rel=<span class="hljs-string">"previous"</span>; <span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">claims</span>/<span class="hljs-attr">domains</span>?<span class="hljs-attr">page</span>=<span class="hljs-string">4</span>&gt;</span>; rel="next", <span class="hljs-tag">&lt;/<span class="hljs-name">claims</span>/<span class="hljs-attr">domains</span>?<span class="hljs-attr">page</span>=<span class="hljs-string">5</span>&gt;</span>; rel="last"</span></code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: array of domainClaim</p><p><strong>Items</strong>: domainClaim</p><div class="items"><ul><li><strong>id</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li><li><strong>status</strong>: <em>required (one of PENDING, VERIFIED)</em><p>Status of the claim</p></li><li><strong>domain</strong>: <em>required (string)</em></li><li><strong>created_at</strong>: <em>required (integer)</em><p>UTC UNIX timestamp marking the time at which the domain claim was created</p></li><li><strong>expires_at</strong>: <em>required (integer)</em><p>UTC UNIX timestamp marking the time at which the domain claim expires</p></li><li><strong>assert_by</strong>: <em>(integer)</em><p>UTC
+ UNIX timestamp marking the time by which this claim has to be asserted.
+ Passed this deadline a client will need to reassert the claim to get a 
+fresh token.</p></li><li><strong>log</strong>: <em>required (array of logEntry)</em><p>List of verification log entries for the domain claim</p><p><strong>Items</strong>: logEntry</p><div class="items"><ul><li><strong>status</strong>: <em>required (one of SUCCESS, ERROR)</em></li><li><strong>description</strong>: <em>required (string)</em></li><li><strong>timestamp</strong>: <em>required (integer)</em></li></ul></div></li></ul></div><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">[
+  {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"A477A8393D17A55ECB2BA6A61F58FEB8"</span>,
+    <span class="hljs-attr">"status"</span>: <span class="hljs-string">"PENDING"</span>,
+    <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"test.demo.ra.globalsign.com"</span>,
+    <span class="hljs-attr">"created_at"</span>: <span class="hljs-number">1524543199</span>,
+    <span class="hljs-attr">"expires_at"</span>: <span class="hljs-number">1524570139</span>,
+    <span class="hljs-attr">"assert_by"</span>: <span class="hljs-number">1524570139</span>,
+    <span class="hljs-attr">"log"</span>: [
+      {
+        <span class="hljs-attr">"status"</span>: <span class="hljs-string">"ERROR"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"error verifying domain claim"</span>,
+        <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1477958400</span>
+      }
+    ]
+  },
+  {
+    <span class="hljs-attr">"id"</span>: <span class="hljs-string">"B477A8393D17A55ECB2BA6A61F58FEB8"</span>,
+    <span class="hljs-attr">"status"</span>: <span class="hljs-string">"VERIFIED"</span>,
+    <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"test2.demo.ra.globalsign.com"</span>,
+    <span class="hljs-attr">"created_at"</span>: <span class="hljs-number">1524543199</span>,
+    <span class="hljs-attr">"expires_at"</span>: <span class="hljs-number">1524570139</span>,
+    <span class="hljs-attr">"log"</span>: [
+      {
+        <span class="hljs-attr">"status"</span>: <span class="hljs-string">"ERROR"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"error verifying domain claim"</span>,
+        <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1537958400</span>
+      }
+    ]
+  }
+]</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_claims_domains__domain_"><span class="parent">/claims/domains</span>/{domain}</a> <span class="methods"><a href="#claims_domains__domain__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_claims_domains__domain_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#claims_domains__domain__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Submit a domain</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains__domain__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/claims/domains</span>/{domain}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Submit a domain</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains__domain__post_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains__domain__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains__domain__post_request"><h3>URI Parameters</h3><ul><li><strong>domain</strong>: <em>required (string)</em><p>The IDNA-encoded domain to be claimed</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains__domain__post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Returned after accepting the domain claim</p><h3>Headers</h3><ul><li><strong>Location</strong>: <em>required (string)</em><p>The URL of the newly created domain claim</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript"><span class="hljs-regexp">/claims/domains/</span>{claimID}</code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>token</strong>: <em>required (string)</em></li><li><strong>assert_by</strong>: <em>required (integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"token"</span>: <span class="hljs-string">"A477A8393D17A55ECB2BA6A61F58FEB8"</span>,
+  <span class="hljs-attr">"assert_by"</span>: <span class="hljs-number">1524570139</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: descriptionMessage</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>,
+  <span class="hljs-attr">"errors"</span>: {
+    <span class="hljs-attr">"gsb"</span>: <span class="hljs-string">"example.com flagged on Google SafeBrowsing list"</span>,
+    <span class="hljs-attr">"blacklist"</span>: <span class="hljs-string">"example.com is not allowed by the blacklist"</span>
+  }
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_claims_domains__claimid_"><span class="parent">/claims/domains</span>/{claimID}</a> <span class="methods"><a href="#claims_domains__claimid__get"><span class="badge badge_get">get</span></a> <a href="#claims_domains__claimid__delete"><span class="badge badge_delete">delete</span></a></span></h4></div><div id="panel_claims_domains__claimid_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#claims_domains__claimid__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Return the requested domain claim</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#claims_domains__claimid__delete'" class="list-group-item"><span class="badge badge_delete">delete</span><div class="method_description"><p>Delete the domain claim</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains__claimid__get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/claims/domains</span>/{claimID}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Return the requested domain claim</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains__claimid__get_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains__claimid__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains__claimid__get_request"><h3>URI Parameters</h3><ul><li><strong>claimID</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains__claimid__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>id</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li><li><strong>status</strong>: <em>required (one of PENDING, VERIFIED)</em><p>Status of the claim</p></li><li><strong>domain</strong>: <em>required (string)</em></li><li><strong>created_at</strong>: <em>required (integer)</em><p>UTC UNIX timestamp marking the time at which the domain claim was created</p></li><li><strong>expires_at</strong>: <em>required (integer)</em><p>UTC UNIX timestamp marking the time at which the domain claim expires</p></li><li><strong>assert_by</strong>: <em>(integer)</em><p>UTC
+ UNIX timestamp marking the time by which this claim has to be asserted.
+ Passed this deadline a client will need to reassert the claim to get a 
+fresh token.</p></li><li><strong>log</strong>: <em>required (array of logEntry)</em><p>List of verification log entries for the domain claim</p><p><strong>Items</strong>: logEntry</p><div class="items"><ul><li><strong>status</strong>: <em>required (one of SUCCESS, ERROR)</em></li><li><strong>description</strong>: <em>required (string)</em></li><li><strong>timestamp</strong>: <em>required (integer)</em></li></ul></div></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"A477A8393D17A55ECB2BA6A61F58FEB8"</span>,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-string">"VERIFIED"</span>,
+  <span class="hljs-attr">"domain"</span>: <span class="hljs-string">"test.demo.ra.globalsign.com"</span>,
+  <span class="hljs-attr">"created_at"</span>: <span class="hljs-number">1524543199</span>,
+  <span class="hljs-attr">"expires_at"</span>: <span class="hljs-number">1524570139</span>,
+  <span class="hljs-attr">"assert_by"</span>: <span class="hljs-number">1524570139</span>,
+  <span class="hljs-attr">"log"</span>: [
+    {
+      <span class="hljs-attr">"status"</span>: <span class="hljs-string">"ERROR"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"error verifying domain claim"</span>,
+      <span class="hljs-attr">"timestamp"</span>: <span class="hljs-number">1477958400</span>
+    }
+  ]
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains__claimid__delete"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_delete">delete</span> <span class="parent">/claims/domains</span>/{claimID}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Delete the domain claim</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains__claimid__delete_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains__claimid__delete_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains__claimid__delete_request"><h3>URI Parameters</h3><ul><li><strong>claimID</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains__claimid__delete_response"><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><p>Returned when the claim is deleted</p><h3>Headers</h3><ul><li><strong>Content-Length</strong>: <em>required (integer - default: 0)</em><p>This response does not return a body</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Not found"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_claims_domains__claimid__dns"><span class="parent">/claims/domains/{claimID}</span>/dns</a> <span class="methods"><a href="#claims_domains__claimid__dns_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_claims_domains__claimid__dns" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#claims_domains__claimid__dns_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Request assertion of domain control using DNS</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains__claimid__dns_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/claims/domains/{claimID}</span>/dns</h4></div><div class="modal-body"><div class="alert alert-info"><p>Request assertion of domain control using DNS</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains__claimid__dns_post_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains__claimid__dns_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains__claimid__dns_post_request"><h3>URI Parameters</h3><ul><li><strong>claimID</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains__claimid__dns_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Domain control assertion request for the domain was created</p><h3>Headers</h3><ul><li><strong>Content-Length</strong>: <em>required (integer - default: 0)</em><p>This response does not return a body</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/202" target="_blank">202</a></h2><p>A previous DNS domain control assertion request is pending</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Operation in progress"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><p>Domain control assertion request verified</p><h3>Headers</h3><ul><li><strong>Content-Length</strong>: <em>required (integer - default: 0)</em><p>This response does not return a body</p></li></ul><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/424" target="_blank">424</a></h2><p>Claim has expired and needs to be reasserted before scheduling domain control assertion</p><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Claim expired. Reassert first"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_claims_domains__claimid__reassert"><span class="parent">/claims/domains/{claimID}</span>/reassert</a> <span class="methods"><a href="#claims_domains__claimid__reassert_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_claims_domains__claimid__reassert" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#claims_domains__claimid__reassert_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Request reassertion of an existing claim</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="claims_domains__claimid__reassert_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/claims/domains/{claimID}</span>/reassert</h4></div><div class="modal-body"><div class="alert alert-info"><p>Request reassertion of an existing claim</p></div><ul class="nav nav-tabs"><li class="active"><a href="#claims_domains__claimid__reassert_post_request" data-toggle="tab">Request</a></li><li><a href="#claims_domains__claimid__reassert_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="claims_domains__claimid__reassert_post_request"><h3>URI Parameters</h3><ul><li><strong>claimID</strong>: <em>required (string - minLength: 32 - maxLength: 32)</em><p>ID of a claim</p></li></ul><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>The Authorization header. Only "Bearer" is supported</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs css"><span class="hljs-selector-tag">Bearer</span> <span class="hljs-selector-tag">eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9</span><span class="hljs-selector-class">.eyJ1c2VyX2lkIjogMX0</span><span class="hljs-selector-class">.BSf1w1blYKcbxVlyOtUogUsozH2clY34xxYPd8lQIlQ</span></code></pre></div></li></ul></div><div class="tab-pane" id="claims_domains__claimid__reassert_post_response"><h2>HTTP status code <a href="http://httpstatus.es/201" target="_blank">201</a></h2><p>Returned after accepting the domain claim reassert, returns the new token and the assert_by timestamp associated to the claim</p><h3>Headers</h3><ul><li><strong>Location</strong>: <em>required (string)</em><p>The URL of the existing domain claim</p><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs coffeescript"><span class="hljs-regexp">/claims/domains/</span>{claimID}</code></pre></div></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>token</strong>: <em>required (string)</em></li><li><strong>assert_by</strong>: <em>required (integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"token"</span>: <span class="hljs-string">"A477A8393D17A55ECB2BA6A61F58FEB8"</span>,
+  <span class="hljs-attr">"assert_by"</span>: <span class="hljs-number">1524570139</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/202" target="_blank">202</a></h2><p>A previous DNS domain control assertion request is pending for the claim</p><h3>Body</h3><p><strong>Media type</strong>: application/json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Operation in progress"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/401" target="_blank">401</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Unauthorized"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/422" target="_blank">422</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Validation error message"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/429" target="_blank">429</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Rate Limit Reached"</span>
+}</code></pre></div><h2>HTTP status code <a href="http://httpstatus.es/503" target="_blank">503</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/problem+json;charset=utf-8</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>description</strong>: <em>required (string)</em></li><li><strong>id</strong>: <em>(string)</em></li><li><strong>errors</strong>: <em>(object)</em><p>key value error type</p><ul><li><strong></strong>: <em>required (string)</em><p>key is the error type, and the value is the error detail</p></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code class="hljs json">{
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Service busy, please retry later"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"0vqe8FWeDe4DQ7rU7wbzzGmPc4B"</span>
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li class="active"><a href="#login">/login</a></li><li><a href="#certificates">/certificates</a></li><li><a href="#validationpolicy">/validationpolicy</a></li><li><a href="#counters_certificates">/counters/certificates</a></li><li><a href="#stats">/stats</a></li><li class=""><a href="#claims_domains">/claims/domains</a></li></ul></div></div></div></div>
+</body></html>
