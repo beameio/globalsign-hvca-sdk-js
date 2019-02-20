@@ -341,6 +341,30 @@ class GlobalSignHVCAClient {
         throw new Error(`retrieveCertificate() failed. Last response - ${response.statusCode} ${response.body}`);
     }
 
+    async retrieveCertificateBySerialNumber(certificateIdentifier){
+        let resp = await this._makeAuthorizedRequest({
+            method: "GET",
+            uri: apiEndpoint + "/v2/certificates/" + certificateIdentifier,
+            json: true
+        });
+        return resp;
+    }
+    /**
+     * Make an API call to revoke certificate.
+     * @param {certificateSerialNumber} certificateSerialNumber
+     */
+
+    async revoke(certificateSerialNumber){
+        let resp = await this._makeAuthorizedRequest({
+            method: "DELETE",
+            uri: apiEndpoint + "/v2/certificates/" + certificateSerialNumber,
+            json: true
+        });
+        return resp;
+    }
+
+
+
     /**
      * Make an API call to create certificate.
      * @param {PublicKeyPEM} publicKey
@@ -433,6 +457,8 @@ class GlobalSignHVCAClient {
 
         return await this._assertDomainValidationClaim(claimId, checker);
     }
+
+
 
     /**
      * Retrieves DV claim
