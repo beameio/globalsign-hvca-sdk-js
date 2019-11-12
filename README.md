@@ -78,3 +78,10 @@ such as substituting variables in order to pass the correct data into the functi
 ### Get trust chain
 
 	trustChain = await gsClient.getTrustChain();
+
+
+## Running tests
+
+`TEST_PLAN_FACTORY` environment variable needs to be defined and pointing to a test plan file (example available in gs-certificates-service repo, beame-test-setup.js)
+
+To run the tests run `npm test` or by running  `./node_modules/.bin/mocha --delay --slow 5000 --require mocha-steps test/test.js` in the console.
