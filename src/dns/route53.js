@@ -19,7 +19,7 @@ async function _getZone(domain) {
     const zones = (await route53.listHostedZonesByName(params).promise())
         .HostedZones
         .filter(z => z.Name === domain);
-    assert.equal(zones.length, 1, `Don't know how to handle multiple (or none) DNS zones for domain ${domain}. Expected exatly one zone.`);
+    assert.equal(zones.length, 1, `Don't know how to handle multiple (or none) DNS zones for domain ${domain}. Expected exactly one zone.`);
     return zones[0];
 }
 
